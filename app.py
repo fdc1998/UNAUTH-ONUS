@@ -1,17 +1,18 @@
 import json
-
-from flask import Flask, redirect, url_for, render_template, request, abort
+from flask_modals import Modal, render_template_modal
+from flask import Flask, redirect, url_for, render_template, request, abort, flash
 from models.user_model import *
 import jsonify
 from playhouse.shortcuts import model_to_dict
 
 app = Flask(__name__, static_folder='static')
-
+modal = Modal(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
 
+    flash('Invalid username or password', 'danger')
+    return render_template_modal('index.html', modal='modal-form')
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
@@ -23,16 +24,18 @@ def add():
     else:
         abort(403)
 
+@app.route('/remove/', methods=['POST'])
+def del_onu():
+    localidade = request.form['serial']
+    serial = request.form['olts']
+    return f"<h1>{serial}--{localidade}</h1>"
 
-@app.route('/api/olts/', methods=['GET'])
-def get_olts():
+
+@app.route('/selremove/', methods=['GET', 'POST'])
+def get_localidades():
     if request.method == 'GET':
-        olts = list(Olt.select().dicts())
-        return json.dumps(olts)
-
-    else:
-        abort(403)
-
+        localidades = list(Localidade.select().dicts())
+        return render_template('onu-remove.html', my_string="Include Help!", my_list=localidades)
 
 @app.route('/sucess')
 def sucess():
@@ -57,4 +60,4 @@ def user(name=None):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.50.230',port=3000,debug=True)
+    app.run()

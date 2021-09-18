@@ -3,4 +3,4 @@ from models.user_model import  *
 
 
 db = dbconnect()
-db.create_tables([Localidade, Olt])
+db.create_tables([Localidade, Olt, Olt2localidade])

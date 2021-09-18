@@ -19,7 +19,6 @@ class Olt(Model):
         database = db
         db_table = 'olts'
 
-    localidadeid = ForeignKeyField(Localidade, backref='localidadeid')
     name = CharField(unique=True)
     manufacturer = CharField()
     version = CharField()
@@ -28,3 +27,13 @@ class Olt(Model):
     port = CharField()
     username = CharField()
     password = CharField()
+    active = BooleanField()
+
+
+class Olt2localidade(Model):
+    class Meta:
+        database = db
+        db_table = 'oltsporlocalidade'
+
+    localidadeid = ForeignKeyField(Localidade, backref='localidadeid')
+    oltid = ForeignKeyField(Olt, backref='oltid')
