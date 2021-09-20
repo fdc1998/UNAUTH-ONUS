@@ -1,15 +1,32 @@
-import json
 from flask import Flask, redirect, url_for, render_template, request, abort, flash
 from models.user_model import *
-import jsonify
-from playhouse.shortcuts import model_to_dict
+from models.remove_onu import *
 import time
-import urllib.parse
+import json
 
 app = Flask(__name__, static_folder='static')
 
 
-@app.route("/removeonu", methods=["POST","GET"])
+@app.route('/')
+def index():
+    return render_template('login.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.args:
+        username = request.args['username']
+        password = request.args['password']
+        try:
+            if Users.get(Users.name == username).name and Users.get(Users.password == password).password:
+                return redirect('selremove')
+
+
+        except Users.DoesNotExist:
+            return 'Usuario ou Senha incorretos'
+
+
+@app.route("/removeonu", methods=["POST", "GET"])
 def target():
     if request.args:
         serial = str(request.args['serial'])
@@ -19,35 +36,11 @@ def target():
 
 @app.route("/processing")
 def processing():
+    serial = str(request.args['data'].split(';')[0])
+    localidade = str(request.args['data'].split(';')[1])
+    print(serial, localidade)
+    oltsids = get_olt_id_from_localidade(localidade)
     return render_template('success.html', passed_data="Onu removida com sucesso")
-
-
-@app.route('/')
-def index():
-    if request.method == 'GET':
-        print('get')
-        localidades = list(Localidade.select().dicts())
-        return render_template('onu-remove.html', my_string="Include Help!", my_list=localidades)
-    else:
-        print('post')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Usuario ou senha invalida'
-        return render_template('login.html', error=error)
-
-
-@app.route('/remove/<model_prediction>', methods=['POST'])
-def del_onu(model_prediction):
-    return render_template(
-        'home.html',
-        prediction=model_prediction,
-        show_predictions_modal=True
-    )
 
 
 @app.route('/selremove/', methods=['GET', 'POST'])

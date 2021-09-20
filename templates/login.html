@@ -20,18 +20,12 @@
     </header>
     <section class="onu-remove">
       <div class="container">
-        <h2>REMOVER ONU</h2>
-        <form action="http://127.0.0.1:5000/removeonu" method="get">
-          <label for="olts">LOCALIDADE:</label>
-          <Select name="olts" class="olts">
-            {% for n in my_list %}
-                <option>{{n['name']}}</option>
-            {% endfor %}
-          </Select>
-          <label for="" title="Didite o Serial do equipamento">Serial:</label>
-          <input title="Didite o Serial do equipamento" type="text" name="serial" id="serial" placeholder="Ex: ITBS32548741" required />
+        <h2>Login</h2>
+        <form action="http://127.0.0.1:5000/login" method="get">
+          <input title="Username" type="text" name="username" id="username" placeholder="usuario" required />
+          <input title="Password" type="password" name="password" id="password" placeholder="senha" required />
           <div class="btn-delete">
-              <button type="submit">Remover</button>
+              <button type="submit">Login in</button>
           </div>
         </form>
       </div>

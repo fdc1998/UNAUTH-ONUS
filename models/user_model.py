@@ -5,6 +5,15 @@ from models.connections import dbconnect
 # persist information
 db = dbconnect()
 
+class Users(Model):
+    class Meta:
+        database = db
+        db_table = 'users'
+
+    name = CharField(unique=True)
+    email = CharField(unique=True)
+    password = CharField()
+
 
 class Localidade(Model):
     class Meta:
@@ -35,5 +44,5 @@ class Olt2localidade(Model):
         database = db
         db_table = 'oltsporlocalidade'
 
-    localidadeid = ForeignKeyField(Localidade, backref='localidadeid')
-    oltid = ForeignKeyField(Olt, backref='oltid')
+    localidade_id = ForeignKeyField(Localidade, backref='localidade_id')
+    olt_id = ForeignKeyField(Olt, backref='olt_id')
