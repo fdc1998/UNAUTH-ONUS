@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    {{ modals() }}
-</head>
 <body>
-<h1>Exemplo de CSS</h1>
-<div class="modal-body">
-{{ modal_messages() }}
-<form action="http://127.0.0.1:5000/add" method="post">
-    <input type="text" name="nome" id="nome" placeholder="Digite seu nome...">
-    <br>
-    <button type="submit">Enviar</button>
-</form>
+    <h3>Type anything:</h3>
+    <p>
+    <form action="http://127.0.0.1:5000/target_endpoint" method="get">
+        <input type="text" name="anything" placeholder="Type anything here">
+        <input type="submit" name="anything_submit" value="Submit">
+    </form>
+    </p>
 </body>
-</html>
