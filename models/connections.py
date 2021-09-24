@@ -1,9 +1,12 @@
-import sqlite3
-from peewee import SqliteDatabase
-from flask import current_app
 import os
+from flask import current_app
+from peewee import SqliteDatabase
+
+
 
 
 def dbconnect():
-    sqlite_db = SqliteDatabase('my_app.db')
-    return sqlite_db
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))  # This is your Project Root
+    db = SqliteDatabase(f'{ROOT_DIR}\my_app.db')
+    return db
+

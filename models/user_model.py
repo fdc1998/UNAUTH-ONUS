@@ -1,33 +1,24 @@
 from peewee import *
 from models.connections import dbconnect
 
-# create a peewee database instance -- our models will use this database to
-# persist information
-db = dbconnect()
 
-class Users(Model):
+class BaseModel(Model):
     class Meta:
+        db = dbconnect()
         database = db
-        db_table = 'users'
 
+
+class Users(BaseModel):
     name = CharField(unique=True)
     email = CharField(unique=True)
     password = CharField()
 
 
-class Localidade(Model):
-    class Meta:
-        database = db
-        db_table = 'localidades'
-
+class Location(BaseModel):
     name = CharField(unique=True)
 
 
-class Olt(Model):
-    class Meta:
-        database = db
-        db_table = 'olts'
-
+class Olt(BaseModel):
     name = CharField(unique=True)
     manufacturer = CharField()
     version = CharField()
@@ -39,10 +30,6 @@ class Olt(Model):
     active = BooleanField()
 
 
-class Olt2localidade(Model):
-    class Meta:
-        database = db
-        db_table = 'oltsporlocalidade'
-
-    localidade_id = ForeignKeyField(Localidade, backref='localidade_id')
-    olt_id = ForeignKeyField(Olt, backref='olt_id')
+class Olt2location(BaseModel):
+    location_id = ForeignKeyField(Location, backref='olt2location')
+    olt_id = ForeignKeyField(Location, backref='olt2location')

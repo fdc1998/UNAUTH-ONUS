@@ -1,8 +1,8 @@
 from flask import Flask, redirect, url_for, render_template, request, abort, flash
-from models.user_model import *
-from models.remove_onu import *
-import time
-import json
+from models.user_model import Olt, Location, Olt2location, Users
+from models.remove_onu import get_olt_id_from_localidade
+from models.select_script_olt import select_script
+
 
 app = Flask(__name__, static_folder='static')
 
@@ -38,16 +38,20 @@ def target():
 def processing():
     serial = str(request.args['data'].split(';')[0])
     localidade = str(request.args['data'].split(';')[1])
-    print(serial, localidade)
-    oltsids = get_olt_id_from_localidade(localidade)
-    return render_template('success.html', passed_data="Onu removida com sucesso")
+    olts = get_olt_id_from_localidade(localidade)
+    if olts:
+        result = select_script(olts, serial)
+        if result:
+            return render_template('success.html', passed_data="Onu removida com sucesso")
+        else:
+            return render_template('success.html', passed_data="Onu não encontrada")
 
 
 @app.route('/selremove/', methods=['GET', 'POST'])
 def get_localidades():
     if request.method == 'GET':
         print('get')
-        localidades = list(Localidade.select().dicts())
+        localidades = list(Location.select().dicts())
         return render_template('onu-remove.html', my_string="Include Help!", my_list=localidades)
     else:
         print('post')
