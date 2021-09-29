@@ -6,7 +6,7 @@
     <div class="body">
         <section class="onu-remove">
             <div class="container">
-                 <form action="http://{{ passed_data[0] }}:{{ passed_data[1] }}/selremove" method="get">
+                 <form action="http://172.16.254.18:5000/selremove" method="get">
                      {% for message in passed_data %}
                          {% if message[1] == 'REMOVE OK' %}
                                 <br>"{{ message[0] }} === ONU removida com sucesso"
