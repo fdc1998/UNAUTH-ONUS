@@ -14,12 +14,12 @@ def select_script(olts, serial):
         if 'FIBERHOME' == manufacturer:
             versions = int(version.split('RP')[1])
             if versions > 700:
-                time.sleep(2)
+                # time.sleep(2)
                 # return True, serial
                 result = fiberhome_new(olt, serial)
             else:
-                time.sleep(2)
-                # return True, serial
+                # time.sleep(2)
+                return True, serial
                 result = fiberhone_old(olt, serial)
 
         if 'HUAWEI' == manufacturer:

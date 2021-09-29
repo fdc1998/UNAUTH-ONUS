@@ -3,8 +3,13 @@ from models.user_model import Olt, Location, Olt2location, Users
 from models.remove_onu import get_olt_id_from_localidade
 from models.select_script_olt import select_script
 from models.config import config
+import os
 
 app = Flask(__name__, static_folder='static')
+SESSION_TYPE = "filesystem"
+PERMANENT_SESSION_LIFETIME = 1800
+
+app.config.update(SECRET_KEY=os.urandom(24))
 result = config()
 host = result[0]
 port = result[1]
@@ -32,6 +37,16 @@ def login():
 def target():
     if request.args:
         serial = str(request.args['serial'])
+
+        if len(serial) == 12:
+            serial = serial[:4].upper() + serial[4:].lower()
+        elif len(serial) == 16:
+            serial = serial.upper()
+        else:
+            flash("Formato incorreto do serial da ONU")
+            localidades = list(Location.select().dicts())
+            return render_template('onu-remove.html', my_string="Include Help!", my_list=[localidades, host, port])
+
         localidade = str(request.args['olts'])
         return render_template('loading.html', my_data=[localidade, serial])
 
@@ -40,7 +55,6 @@ def target():
 @app.route("/processing")
 def processing():
     serial = str(request.args['data'].split(';')[0])
-    serial = serial[-4:].upper() + serial[4:].lower()
     localidade = str(request.args['data'].split(';')[1])
     olts = get_olt_id_from_localidade(localidade)
     if olts:
