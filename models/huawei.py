@@ -162,12 +162,12 @@ def huawei(olt, serial_onu):
 
                 
             close_connection(tn)
-            return False
+            return False, 'NOT REMOVE'
 
         else:
             close_connection(tn)
-            return False
+            return False, 'NOT FOUND'
 
 
 if __name__ == '__main__':
-    fiberhone_old()
+    huawei()

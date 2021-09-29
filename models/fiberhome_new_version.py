@@ -106,19 +106,15 @@ def fiberhome_new(olt, serial):
         if result:
             result = deauth_onu(session, serial)
             if result:
-                result = get_onu_by_serial(session, serial)
-                if result == False:
-                    close_connection(session)
-                    return True
-                else:
-                    close_connection(session)
-                    return False
+                close_connection(session)
+                return True
             else:
                 close_connection(session)
-                return False
+                return False, 'NOT REMOVE'
+
         else:
             close_connection(session)
-            return False
+            return False, 'NOT FOUND'
 
 
 if __name__ == '__main__':
