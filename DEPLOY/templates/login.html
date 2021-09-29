@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <title>ONU Remove</title>
+</head>
+<body>
+  <div class="body">
+    <header>
+      <div>O</div>
+      <div>L</div>
+      <div>T</div>
+      <span>Management Functions</span>
+    </header>
+    <section class="onu-remove">
+      <div class="container">
+        <h2>Login</h2>
+        <form action="http://{{ my_data[0] }}:{{ my_data[1] }}/login" method="get">
+          <input title="Username" type="text" name="username" id="username" placeholder="usuario" required />
+          <input title="Password" type="password" name="password" id="password" placeholder="senha" required />
+          <div class="btn-delete">
+              <button type="submit">Login in</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <footer>
+      <div>
+        <h3>© NOC Solutions - 2021</h3>
+        <p>Ver. 1.0</p>
+      </div>
+    </footer>
+</body>
+</html>
