@@ -6,6 +6,7 @@ from flask import Flask, redirect, url_for, render_template, request, abort, fla
 
 
 def select_script(olts, serial):
+    results = []
     for olt in olts:
         manufacturer = olt['manufacturer']
         version = olt['version']
@@ -17,6 +18,7 @@ def select_script(olts, serial):
                 # time.sleep(2)
                 # return True, serial
                 result = fiberhome_new(olt, serial)
+
             else:
                 # time.sleep(2)
                 # return True, serial
@@ -28,4 +30,6 @@ def select_script(olts, serial):
         if 'ZTE' == manufacturer:
             print(f'{name}-{manufacturer}')
 
-    return result, serial
+        results.append([name, result])
+
+    return results
