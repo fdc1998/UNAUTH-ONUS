@@ -62,21 +62,12 @@ def processing():
         result = select_script(olts, serial)
         return render_template('success.html', passed_data=result)
 
-        # if result[0] == 'REMOVE OK':
-        #     return render_template('success.html', passed_data=result)
-
-        # if result[0] == 'NOT REMOVE':
-        #     return render_template('success.html', passed_data=[host, port, f"Onu {result[1]}, falha ao remover"])
-        #
-        # if result[0] == 'NOT FOUND':
-        #     return render_template('success.html', passed_data=[host, port, f"Onu {result[1]} não encontrada"])
-
 
 @app.route('/selremove/', methods=['GET', 'POST'])
 def get_localidades():
     if request.method == 'GET':
         print('get')
-        localidades = list(Location.select().dicts())
+        localidades = list(Location.select().order_by(Location.name).dicts())
         return render_template('onu-remove.html', my_string="Include Help!", my_list=[localidades, host, port])
     else:
         print('post')
