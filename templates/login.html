@@ -21,7 +21,7 @@
     <section class="onu-remove">
       <div class="container">
         <h2>Login</h2>
-        <form action="http://127.0.0.1:5000/login" method="get">
+        <form action="http://{{ my_data[0] }}:{{ my_data[1] }}/login" method="get">
           <input title="Username" type="text" name="username" id="username" placeholder="usuario" required />
           <input title="Password" type="password" name="password" id="password" placeholder="senha" required />
           <div class="btn-delete">

@@ -21,10 +21,10 @@
     <section class="onu-remove">
       <div class="container">
         <h2>REMOVER ONU</h2>
-        <form action="http://127.0.0.1:5000/removeonu" method="get">
+        <form action="http://{{ my_list[1] }}:{{ my_list[2] }}/removeonu" method="get">
           <label for="olts">LOCALIDADE:</label>
           <Select name="olts" class="olts">
-            {% for n in my_list %}
+            {% for n in my_list[0] %}
                 <option>{{n['name']}}</option>
             {% endfor %}
           </Select>
