@@ -9,15 +9,14 @@
                  <form action="http://{{ passed_data[0] }}:{{ passed_data[1] }}/selremove" method="get">
                      {% for message in passed_data %}
                          {% if message[1] == 'REMOVE OK' %}
-                                "{{ message[0] }} ----> ONU removida com sucesso"
+                                <br>"{{ message[0] }} === ONU removida com sucesso"
                          {% endif %}
                          {% if message[1] == 'NOT REMOVE' %}
-                                "{{ message[0] }} ----> Falha ao remover ONU"
+                                <br>"{{ message[0] }} === Falha ao remover ONU"
                          {% endif %}
                          {% if message[1] == 'NOT FOUND' %}
-                                "{{ message[0] }} ----> ONU não encontrada"
+                                <br>"{{ message[0] }} === ONU não encontrada"
                         {% endif %}
-                         <h1>------------------------------------------------------------------------</h1>
                      {% endfor %}
                      <div class="btn-delete">
                         <button style="margin-top: 20px" type="submit">Voltar</button>
