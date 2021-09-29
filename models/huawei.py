@@ -153,24 +153,27 @@ def huawei(olt, serial_onu):
     if tn:
         onuinfo = find_onu(tn, serial_onu)
         if onuinfo:
-            while not onudelete and cont < 2:
-                cont += 1
-                srvdelete = delete_service_port(tn, onuinfo)
+            srvdelete = delete_service_port(tn, onuinfo)
 
-                if srvdelete:
-                    onudelete = delete_onu(tn, onuinfo)
+            if srvdelete:
+                onudelete = delete_onu(tn, onuinfo)
 
-                    if not onudelete:
-                        close_connection(tn)
-                        return 'REMOVE OK'
-
-                
-            close_connection(tn)
-            return 'NOT REMOVE'
+            else:
+                onudelete = delete_onu(tn, onuinfo)
 
         else:
             close_connection(tn)
             return 'NOT FOUND'
+
+        if onudelete:
+            close_connection(tn)
+            return 'REMOVE OK'
+
+        else:
+            close_connection(tn)
+            return 'NOT REMOVE'
+
+
 
 
 if __name__ == '__main__':
