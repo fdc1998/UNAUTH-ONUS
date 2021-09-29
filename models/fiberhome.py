@@ -120,15 +120,13 @@ def deauth_onu(session, serial):
 
         if match_obj:
             session.write(bytes(cmd + '\n', 'utf-8'))
-            index, match_obj, text = session.expect(["gpononu".encode('latin-1')], timeout=3)
+            index, match_obj, text = session.expect(["gpononu".encode('latin-1')], timeout=5)
 
             if match_obj:
-                result = session.read_very_eager().decode('latin-1')
+                return True
 
-                if 'whitelist' in result:
-                    return True
-                else:
-                    return False
+            else:
+                return False
 
     except Exception as e:
         logger.info('Error deauth ONU: {}'.format(str(e)))

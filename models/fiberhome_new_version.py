@@ -90,6 +90,7 @@ def deauth_onu(session, serial):
             session.write(bytes(cmd + '\n', 'utf-8'))
             index, match_obj, text = session.expect(["success".encode('latin-1')], timeout=3)
             return True
+
     except Exception as e:
         logger.info('Error deauth ONU: {}'.format(str(e)))
         return False
