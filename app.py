@@ -57,11 +57,16 @@ def processing():
     serial = str(request.args['data'].split(';')[0])
     localidade = str(request.args['data'].split(';')[1])
     olts = get_olt_id_from_localidade(localidade)
+
     if olts:
         result = select_script(olts, serial)
-        if result[0]:
+        if result[0] == 'REMOVE OK':
             return render_template('success.html', passed_data=[host, port, f"Onu {result[1]} removida com sucesso"])
-        else:
+
+        if result[0] == 'NOT REMOVE':
+            return render_template('success.html', passed_data=[host, port, f"Onu {result[1]}, falha ao remover"])
+
+        if result[0] == 'NOT FOUND':
             return render_template('success.html', passed_data=[host, port, f"Onu {result[1]} não encontrada"])
 
 

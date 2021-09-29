@@ -5,7 +5,11 @@ from loguru import logger
 
 def connect_olt(olt):
     try:
-        logger.info(f'Checando conexão com a OLT')
+        name = olt['name']
+        ip = olt['host']
+        port = olt['port']
+
+        logger.info(f'Checando conexão com a OLT {name} - {ip} - {port}')
         tn = Telnet(host=olt['host'], port=olt['port'], timeout=5)
 
         index, match_obj, text = tn.expect(["name:".encode('latin-1')], timeout=5)
@@ -158,15 +162,15 @@ def huawei(olt, serial_onu):
 
                     if not onudelete:
                         close_connection(tn)
-                        return True
+                        return 'REMOVE OK'
 
                 
             close_connection(tn)
-            return False, 'NOT REMOVE'
+            return 'NOT REMOVE'
 
         else:
             close_connection(tn)
-            return False, 'NOT FOUND'
+            return 'NOT FOUND'
 
 
 if __name__ == '__main__':

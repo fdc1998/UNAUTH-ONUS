@@ -19,7 +19,7 @@ def select_script(olts, serial):
                 result = fiberhome_new(olt, serial)
             else:
                 # time.sleep(2)
-                return True, serial
+                # return True, serial
                 result = fiberhone_old(olt, serial)
 
         if 'HUAWEI' == manufacturer:
