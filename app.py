@@ -58,6 +58,11 @@ def processing():
     localidade = str(request.args['data'].split(';')[1])
     olts = get_olt_id_from_localidade(localidade)
 
+    if len(serial) == 12:
+        serial = serial[:4].upper() + serial[4:].lower()
+    else:
+        serial = serial.upper()
+
     if olts:
         result = select_script(olts, serial)
         return render_template('success.html', passed_data=result)
