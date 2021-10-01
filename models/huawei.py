@@ -167,16 +167,15 @@ def huawei(olt, serial_onu):
     tn = connect_olt(olt)
 
     if tn:
-        if tn:
-            if len(serial_onu) == 12:
-                serial = get_serial(tn, serial_onu)
-
-                if serial == False:
-                    return 'NOT FOUND'
-                else:
-                    serial_onu = serial.upper()
-
-            logger.info(serial_onu)
+            # if len(serial_onu) == 12:
+            #     serial = get_serial(tn, serial_onu)
+            #
+            #     if serial == False:
+            #         return 'NOT FOUND'
+            #     else:
+            #         serial_onu = serial.upper()
+            #
+            # logger.info(serial_onu)
 
 
         onuinfo = find_onu(tn, serial_onu)
@@ -190,19 +189,16 @@ def huawei(olt, serial_onu):
             else:
                 onudelete = delete_onu(tn, onuinfo)
 
+
+            if onudelete:
+                close_connection(tn)
+                return 'REMOVE OK'
         else:
             close_connection(tn)
             return 'NOT FOUND'
 
-        if onudelete:
-            close_connection(tn)
-            return 'REMOVE OK'
-
-        else:
-            close_connection(tn)
-            return 'NOT REMOVE'
-
-
+    else:
+        return 'NOT REMOVE'
 
 
 if __name__ == '__main__':
