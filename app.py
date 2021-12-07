@@ -3,6 +3,7 @@ from models.user_model import Olt, Location, Olt2location, Users
 from models.remove_onu import get_olt_id_from_localidade
 from models.select_script_olt import select_script
 from models.config import config
+from models.smo import *
 import os
 
 app = Flask(__name__, static_folder='static')
@@ -59,6 +60,10 @@ def processing():
     olts = get_olt_id_from_localidade(localidade)
 
     if olts:
+        result = find_onu_id(serial)
+        if result != 'Error':
+            result = remove_onu(result)
+
         result = select_script(olts, serial)
         return render_template('success.html', passed_data=result)
 
