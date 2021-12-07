@@ -12,7 +12,7 @@ def select_script(olts, serial):
         version = olt['version']
         name = olt['name']
 
-        if 'FIBERHOME' == manufacturer:
+        if 'FIBERHOME' == manufacturer and len(serial) == 12:
             versions = int(version.split('RP')[1])
             if versions > 700:
                 # time.sleep(2)
