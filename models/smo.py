@@ -4,7 +4,10 @@ import time
 def find_onu_id(serial):
     r = requests.get(f'http://172.16.254.13:8080/smo/api/onus/?serial={serial}')
     if r.status_code == 200 and len(r.json()) != 0:
-        return r.json()[0]['id']
+        try:
+            return r.json()[0]['id']
+        except:
+            return 'Error'
     else:
         return 'Error'
 
