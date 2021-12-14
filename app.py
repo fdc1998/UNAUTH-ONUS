@@ -15,6 +15,7 @@ result = config()
 host = result[0]
 port = result[1]
 
+
 @app.route('/')
 def index():
     return render_template('login.html', my_data=[host, port])
@@ -50,7 +51,6 @@ def target():
 
         localidade = str(request.args['olts'])
         return render_template('loading.html', my_data=[localidade, serial])
-
 
 
 @app.route("/processing")
